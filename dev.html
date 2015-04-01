@@ -1,0 +1,27 @@
+<html>
+    <head>
+        
+    </head>
+    <body>
+        asd
+        <hr>
+        <h1>
+            h1
+        </h1>
+        <hr>
+        <textarea name="" id="textarea01" cols="30" rows="10"></textarea>
+        <button id="button01">hey</button>
+        <div id="result"></div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script>
+            $("#button01").click(function() {
+                var lines = $("#textarea01").val().split("\n");
+                for(var i = 0;i < lines.length;i++){
+                    $("#result").append(lines[i] + "<br>");
+                    //code here using lines[i] which will give you each line
+                }
+            });
+        </script>
+    </body>
+</html>
