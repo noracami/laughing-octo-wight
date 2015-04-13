@@ -10,9 +10,9 @@
             h1
         </h1>
         <hr>
-        <textarea name="" id="textarea01" cols="30" rows="10"></textarea>
+        <textarea name="" id="textarea01" cols="30" rows="5"></textarea>
         <button id="button01">hey</button>
-        <textarea id="textarea02" cols="10" rows="10">word2,word</textarea>
+        <textarea id="textarea02" cols="10" rows="5">word2,word</textarea>
         <button id="button02" disabled>過濾單字</button>
         <div id="result"></div>
         <table width="70%">
@@ -26,8 +26,35 @@
                 </tr>
             </tbody>
         </table>
+        <hr>
+        <h2>h2</h2>
+        <hr>
+        <textarea name="rawdata" id="textarea03" cols="30" rows="5"></textarea>
+        <button id="button03">Go</button>
+        <div id="result02"></div>
+        <table width="70%">
+            <tbody id="table02">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script>
+            $("#button03").click(function(){
+                var lines = $("#textarea03").val().split("\n");
+                for(var i in lines){
+                    var columns = lines[i].split("\t");
+                    console.log(columns);
+                }
+            });
+        </script>
         <script>
             $("#button01").click(function() {
                 var lines = $("#textarea01").val().split("\n");
