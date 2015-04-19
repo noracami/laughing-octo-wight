@@ -2,21 +2,20 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <style>
+            tbody#table02 tr:first-child td {
+                border-bottom-style: solid;
+            }
+        </style>
     </head>
     <body>
-        title
+        <h2>h2</h2>
         <hr>
-        <h1>
-            h1
-        </h1>
-        <hr>
-        <textarea name="" id="textarea01" cols="30" rows="5"></textarea>
-        <button id="button01">hey</button>
-        <textarea id="textarea02" cols="10" rows="5">word2,word</textarea>
-        <button id="button02" disabled>過濾單字</button>
-        <div id="result"></div>
-        <table width="70%">
-            <tbody id="table01">
+        <textarea name="rawdata" id="textarea03" cols="30" rows="5"></textarea>
+        <button id="button03">Go</button>
+        <div id="result02"></div>
+        <table>
+            <tbody id="table02">
                 <tr>
                     <td>日期</td>
                     <td>單位</td>
@@ -27,142 +26,10 @@
             </tbody>
         </table>
         <hr>
-        <h2>h2</h2>
-        <hr>
-        <textarea name="rawdata" id="textarea03" cols="30" rows="5"></textarea>
-        <button id="button03">Go</button>
-        <div id="result02"></div>
-        <table width="70%">
-            <tbody id="table02">
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
+        <div id="result"></div>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-        <script>
-            $("#button03").click(function(){
-                var mydata = [];
-                var lines = $("#textarea03").val().split("\n");
-                for(var i in lines){
-                    var columns = lines[i].split("\t");
-                    var element = {};
-                    var maincontent = columns[2].split("，");
-                    element.date = maincontent[0].substring(0,4);
-                    element.team = columns[0];
-                    element.member = maincontent[0].substring(7);
-                    element.cate = maincontent[2].substring(2, maincontent[2].length - 1);
-                    element.man = element.member.split("、");
-                    mydata.push(element);
-                }
-                console.log(JSON.stringify(mydata));
-            });
-        </script>
-        <script>
-            $("#button01").click(function() {
-                var lines = $("#textarea01").val().split("\n");
-                var member_count = new Object();
-                var data_filter = $("#textarea02").val().split(",");
-                for(var i = 0;i < lines.length;i++){
-                    var columns = lines[i].split(",");
-                    //var row = "<tr id='row-" + toString(i) + "'>";
-                    $("#table01").append("<tr>");
-                    for(var j = 0;j < columns.length;j++){
-                        //var element = "<td id='element-" + toString(j) + "'>";
-                        $("#table01 tr:last-child").append("<td>");
-                        if(j===2){
-                            var members = columns[j];
-                            for(var word in data_filter){
-                                members = members.replace(data_filter[word], "");
-                            }
-                            //members = members.replace("b", "");
-                            $("#table01 tr:last-child td:last-child").append(members);
-                            members = members.split("、");
-                            //console.log(members);
-                            for(var k = 0;k < members.length;k++){
-                                if(members[k] in member_count){
-                                    member_count[members[k]]++;
-                                }
-                                else{
-                                    member_count[members[k]] = 1;
-                                }
-                            }
-                        }
-                        else{
-                            $("#table01 tr:last-child td:last-child").append(columns[j]);
-                        }
-                    }
-                }
-                //var obj = JSON.parse(member_count);
-                console.log(member_count);
-                //var a = JSON.stringify(member_count);
-                var sortable = [];
-                for (var v in member_count)
-                      sortable.push([v, member_count[v]]);
-                sortable.sort(function(a, b) {return a[1] - b[1]});
-                sortable.reverse();
-                //for(eachone in sortable){
-                    //console.log(eachone + " : " + sortable[eachone]);
-                //}
-                for(var kk = 0; kk < lines.length; kk++){
-                    var digi = kk + 2;
-                    var tr = "#table01 tr:nth-child(" + digi + ")";
-                    var td = "<td id='td-" + digi + "'>";
-                    $(tr).append(td);
-                }
-                //for(var kk = 0; kk < lines.length; kk++){
-                //    var digi = kk + 2;
-                //    var td = "#td-" + digi;
-                //    $(td).append(1);
-                //}
-                //TODO: for each case(row), if eachone == participate, winner = one.
-                var winner_count = new Object();
-                for(var i = 0; i < lines.length; i++){
-                    var columns = lines[i].split(",");
-                    var members = columns[2];
-                    for(var word in data_filter){
-                        members = members.replace(data_filter[word], "");
-                    }
-                    members = members.split("、");
-                    var digi = i + 2;
-                    var td = "#td-" + digi;
-                    $(td).append(function(){
-                        for(var eachone in sortable){
-                            //console.log(sortable[eachone][0]);
-                            if(sortable[eachone][0] in members){
-                            //    console.log(sortable[eachone][0]);
-                            //    return sortable[eachone];
-                            }
-                            var found = $.inArray(sortable[eachone][0], members) > -1;
-                            if(found){
-                                if(sortable[eachone][0] in winner_count){
-                                    winner_count[sortable[eachone][0]]++;
-                                }
-                                else{
-                                    winner_count[sortable[eachone][0]] = 1;
-                                }
-                                return sortable[eachone][0];
-                            }
-                        }
-                    });
-                }
-                var sortable2 = [];
-                for(var v in winner_count)
-                    sortable2.push([v, winner_count[v]]);
-                sortable2.sort(function(a, b) {return a[1] - b[1]});
-                sortable2.reverse();
-                for(var e in sortable2){
-                    //console.log(e + " : " + sortable2[e]);
-                    $("#result").append(sortable2[e][0] + " : " + sortable2[e][1] + "<br>");
-                }
-                console.log(winner_count);
-            });
-        </script>
+        <script src="js/custom.js"></script>
     </body>
 </html>
