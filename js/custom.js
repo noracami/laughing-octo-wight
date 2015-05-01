@@ -66,8 +66,11 @@ $("#button03").click(function() {
         $("#table02 tr:last-child td:last-child").append(mydata[c]["受獎者"]);
     }
     for (var e in sortable) {
+        $("#result").append(sortable[e][0] + " : " + sortable[e][1]);
         if (sortable[e][2]) {
-            $("#result").append(sortable[e][0] + " : " + sortable[e][1] + "<br>");
+            $("#result").append("&#x1f448;<br>");
+        } else {
+            $("#result").append("<br>");
         }
     }
     //console.log(JSON.stringify(sortable));
