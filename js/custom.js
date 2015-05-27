@@ -2,6 +2,9 @@ $("#button03").click(function() {
     var mydata = [];
     var winner = new Object;
     var lines = $("#textarea03").val().split("\n");
+    if (lines[lines.length-1] === "") {
+        lines.pop();
+    }
     
     function count_and_save(x, y) {
         if (x in y) {
@@ -76,6 +79,8 @@ $("#button03").click(function() {
         
         $("#table02").append("<tr>");
         $("#table02 tr:last-child").append("<td>");
+        $("#table02 tr:last-child td:last-child").append(parseInt(c)+1);
+        $("#table02 tr:last-child").append("<td>");
         $("#table02 tr:last-child td:last-child").append(mydata[c]["日期"]);
         $("#table02 tr:last-child").append("<td>");
         $("#table02 tr:last-child td:last-child").append(mydata[c]["單位"]);
@@ -88,6 +93,23 @@ $("#button03").click(function() {
         $("#table02 tr:last-child").append("<td>");
         $("#table02 tr:last-child td:last-child").append(mydata[c]["備註"]);
     }
+    
+    $("#table02").append("<tr>");
+    $("#table02 tr:last-child").append("<td>");
+    $("#table02 tr:last-child td:last-child").append("-");
+    $("#table02 tr:last-child").append("<td>");
+    $("#table02 tr:last-child td:last-child").append("-");
+    $("#table02 tr:last-child").append("<td>");
+    $("#table02 tr:last-child td:last-child").append("-");
+    $("#table02 tr:last-child").append("<td>");
+    $("#table02 tr:last-child td:last-child").append("-");
+    $("#table02 tr:last-child").append("<td>");
+    $("#table02 tr:last-child td:last-child").append("-");
+    $("#table02 tr:last-child").append("<td>");
+    $("#table02 tr:last-child td:last-child").append("-");
+    $("#table02 tr:last-child").append("<td>");
+    $("#table02 tr:last-child td:last-child").append("-");
+    
     for (var e in sortable) {
         $("#result").append(sortable[e][0] + " : " + sortable[e][1]);
         if (sortable[e][2]) {
