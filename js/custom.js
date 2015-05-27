@@ -31,19 +31,40 @@ $("#button03").click(function() {
         }
     }
 
+    var s1 = ["小隊長", "偵查佐", "副所長"];
+    var s2 = ["所長", "警員", "巡佐", "隊長"];
+
+    function get_name(string) {
+        for (var i in s1) {
+            if (string.includes(s1[i])) {
+                return string.substring(3);
+            }
+        }
+        for (var i in s2) {
+            if (string.includes(s2[i])) {
+                return string.substring(2);
+            }
+        }
+        return string;
+    }
+
     for (var i in lines) {
-        var columns = lines[i].split("\t");
+        var columns = lines[i].split("。");
         var element = {};
-        var maincontent = columns[2].split("，");
+        var maincontent = columns[0].split("，");
         element["日期"] = maincontent[0].substring(0,4);
-        element["單位"] = columns[0];
+        element["單位"] = maincontent[0].substring(4,7);
         element["人員"] = maincontent[0].substring(7);
         element["案類"] = maincontent[2].substring(2, maincontent[2].length - 1);
+        if (columns[1].length > 0) {
+            element["備註"] = columns[1];
+        } else {
+            element["備註"] = "&nbsp;";
+        }
         var win = element["人員"].split("、");
+
         for (var j in win) {
-            if (win[j].length > 3) {
-                win[j] = win[j].substring(2);
-            }
+            win[j] = get_name(win[j]);
             count_and_save(win[j], winner);
         }
         element["受獎者"] = win;
@@ -64,6 +85,8 @@ $("#button03").click(function() {
         $("#table02 tr:last-child td:last-child").append(mydata[c]["案類"]);
         $("#table02 tr:last-child").append("<td>");
         $("#table02 tr:last-child td:last-child").append(mydata[c]["受獎者"]);
+        $("#table02 tr:last-child").append("<td>");
+        $("#table02 tr:last-child td:last-child").append(mydata[c]["備註"]);
     }
     for (var e in sortable) {
         $("#result").append(sortable[e][0] + " : " + sortable[e][1]);
